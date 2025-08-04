@@ -1,0 +1,31 @@
+var express = require('express')
+var app = express()
+var port = 3000
+
+function calculatesum(counter){
+    var sum=0
+    for (var i=0;i<=counter;i++){
+        sum+=i;
+    }
+    return sum;
+}
+
+
+function handlefirstrequest(req,res){
+    var counter=req.query.counter
+    var calculate=calculatesum(counter)
+    var answer="sum is :"+calculate
+    res.send(answer);   
+}
+app.get('/about',handlefirstrequest)
+
+
+
+
+function started(){
+ console.log(`Example app listening on port ${port}`)
+}
+app.listen(port,started)
+
+
+
