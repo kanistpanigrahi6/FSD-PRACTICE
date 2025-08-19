@@ -1,0 +1,67 @@
+<head>
+    <title>
+        TODO APP
+    </title>
+</head>
+<script>
+    function todoscallback(data){
+        console.log(data);
+        var parentelement=document.getElementById("mainarea");
+        //parentelement.innerHTML=JSON.stringify(data);
+        for (var i=0;i<data.length;i++){
+        var childelement=document.createElement("div");
+        childelement.innerHTML=data[i].title
+        parentelement.append(childelement)
+        }
+        
+    }
+   function callback2(res){
+    res.json().then(todoscallback);
+
+   }
+    function getdata(){
+        var sendobj1={
+            method:"GET"
+        }
+        fetch("http://localhost:3000/todos",sendobj1).then(callback2)
+    }
+getdata();
+   
+
+    function parsedresp(data){
+        console.log(data)
+    }
+    function callbackfn(res){
+        res.json().then(parsedresp)
+    }
+    function onPress(){
+        var title=document.getElementById("title").value;
+        var description=document.getElementById("description").value;
+
+        var sendobj={
+            method:"POST",
+            body:JSON.stringify({
+                title:title,
+                description:description,
+            }),
+        headers:{
+            "Content-Type":"application/json"
+        }
+        }
+        fetch("http://localhost:3000/todos",sendobj).then(callbackfn)
+    }
+</script>
+<body>
+ TODO TITLE
+    <input type="text" id="title"></input>
+    <br><br>
+    TODO DESCRIPTION
+   <input type="text" id="description"></input> 
+   <br><br>
+   <button onclick="onPress()">send todo</button>
+   <div id="mainarea">
+
+   </div>
+</body>
+
+   
