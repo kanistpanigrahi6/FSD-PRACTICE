@@ -16,7 +16,7 @@ function handlefirstrequest(req,res){
     var answer="the sum is"+calculatedsum
     res.send(answer)
 }
-app.get(`/`,handlefirstrequest)
+app.get(`/handlesum`,handlefirstrequest)
 
 function started(){
     console.log(`Example app listening on port ${port}`)
