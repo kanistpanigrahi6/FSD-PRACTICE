@@ -1,0 +1,1 @@
+This repository serves as a sandbox/practice environment for developing and deploying a full-stack application. The goal is to solidify knowledge across the entire software stack, from the database to the user interface.
