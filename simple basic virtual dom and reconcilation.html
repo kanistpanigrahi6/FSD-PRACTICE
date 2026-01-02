@@ -1,0 +1,68 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Reconciler Demo</title>
+</head>
+<body>
+  <h2>Reconciler Demo</h2>
+  <div id="app"></div>
+  <br>
+  <button onclick="updateUI()">Update Data</button>
+
+  <script>
+    // Initial old data
+    let oldData = [
+      { title: "Learn JS", description: "Basics" },
+      { title: "Learn React", description: "Hooks" }
+    ];
+
+    // First render
+    const parent = document.getElementById("app");
+    render(oldData);
+
+    // Render helper
+    function render(data) {
+      parent.innerHTML = ""; // clear
+      data.forEach(item => {
+        let div = document.createElement("div");
+        div.textContent = item.title + " - " + item.description;
+        parent.appendChild(div);
+      });
+    }
+
+    // Reconciler function
+    function reconcile(parent,oldData, newData) {
+      newData.forEach((item, i) => {
+        if (!oldData[i]) { // Add new
+          let div = document.createElement("div");
+          div.textContent = item.title + " - " + item.description;
+          parent.appendChild(div);
+        } else if (
+          oldData[i].title !== item.title ||
+          oldData[i].description !== item.description
+        ) {
+          parent.children[i].textContent =
+            item.title + " - " + item.description; // Update
+        }
+      });
+
+      // Remove extra items
+      while (parent.children.length > newData.length) {
+        parent.removeChild(parent.lastChild);
+      }
+    }
+
+    // Update data when button is clicked
+    function updateUI() {
+      let newData = [
+        { title: "Learn JS", description: "Advanced" }, // updated
+        { title: "Learn React", description: "Hooks" }, // same
+        { title: "Learn Node", description: "Backend" } // new
+      ];
+      reconcile(parent, oldData, newData);
+      oldData = newData; // update reference
+    }
+  </script>
+</body>
+</html> 
