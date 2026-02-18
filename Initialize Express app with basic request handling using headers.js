@@ -2,6 +2,12 @@ const express = require("express");
 const app=express();
 const port=3000;
 
+function middleware1(req, res, next){
+    console.log("from inside a middleware " + req.headers.cnt);
+    next();
+}
+app.use(middleware1);
+
 function calculate(cnt){
     var sum=0;
     for(var i=0;i<cnt;i++){
@@ -21,15 +27,7 @@ function handlesfirstrequest(req,res){
 // app.get("/handleuser",handlesfirstrequest);
 app.post("/createuser",handlesfirstrequest)
 
-// function welcomepage(req,res){
-//     res.send("Welcome to my app");
-// }
-// app.get(`/welcome`,welcomepage);
 
-// function aboutpage(req,res){
-//     res.send("This is a simple express app");
-// }
-// app.get(`/about`,aboutpage);
 
 function started(){
     console.log(`App listening on port ${port}`);
